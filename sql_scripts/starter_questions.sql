@@ -112,24 +112,63 @@
 
 -- 14. What percentage of names are "unisex" - that is what percentage of names have been used both for boys and for girls?
 
-SELECT gender, COUNT(DISTINCT(name)) AS names_per_gender
-FROM names
-GROUP BY gender;
+-- SELECT (SELECT COUNT(DISTINCT(name))
+-- FROM names
+-- WHERE name IN (Select name
+-- FROM names
+-- GROUP BY name
+-- HAVING COUNT(DISTINCT(gender)) > 1
+-- ORDER BY COUNT(gender) DESC)) * 1.0/COUNT(DISTINCT(name))
+-- FROM names;
 
---Answer: Male names: 41475; Female names: 67698; Total names (from Q6): 98400
-
--- ((41475 + 67698) - 98400) / 98400 = .09868
-
---9.868%
+--Answer: 0.10948170731707317073 (10.9%)
 
 -- 15. How many names have made an appearance in every single year since 1880?
 
+-- SELECT name, COUNT(year) AS years_appearing
+-- FROM names
+-- GROUP BY name, gender
+-- HAVING COUNT(year) = (SELECT COUNT(year) FROM names GROUP BY name, gender ORDER BY COUNT(year) DESC LIMIT 1)
+-- ORDER BY years_appearing DESC;
+
+--Answer: 927
+
 -- 16. How many names have only appeared in one year?
+
+-- SELECT COUNT(DISTINCT(name))
+-- From names
+-- WHERE name IN (SELECT name
+-- FROM names
+-- GROUP BY name, gender
+-- HAVING COUNT(year) = 1);
+
+--Answer: 23495
 
 -- 17. How many names only appeared in the 1950s?
 
+-- SELECT name, MIN(year), MIN(year)
+-- FROM names
+-- GROUP BY name
+-- HAVING MIN(year) > 1949 AND MAX(year) < 1960;
+
+-- Answer: 661
+
 -- 18. How many names made their first appearance in the 2010s?
 
+-- SELECT name, MIN(year)
+-- FROM names
+-- GROUP BY name
+-- HAVING MIN(year) > 2010;
+
+--Answer: 9766
+
 -- 19. Find the names that have not be used in the longest.
+
+-- SELECT name, MAX(year)
+-- FROM names
+-- GROUP BY name
+-- ORDER BY MAX(year);
+
+--Answer: Zilpah and Roll
 
 -- 20. Come up with a question that you would like to answer using this dataset. Then write a query to answer this question.
