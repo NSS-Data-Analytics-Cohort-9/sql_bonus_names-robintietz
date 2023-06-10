@@ -125,24 +125,29 @@
 
 -- 15. How many names have made an appearance in every single year since 1880?
 
--- SELECT name, COUNT(year) AS years_appearing
+-- SELECT name, COUNT(DISTINCT(year)) AS years_appearing
 -- FROM names
--- GROUP BY name, gender
--- HAVING COUNT(year) = (SELECT COUNT(year) FROM names GROUP BY name, gender ORDER BY COUNT(year) DESC LIMIT 1)
+-- GROUP BY name
+-- HAVING COUNT(year) = (SELECT COUNT(DISTINCT(year)) FROM names GROUP BY name ORDER BY COUNT(DISTINCT(year)) DESC LIMIT 1)
 -- ORDER BY years_appearing DESC;
 
---Answer: 927
+-- SELECT name, COUNT(DISTINCT(year)) AS years_appearing
+-- FROM names
+-- GROUP BY name
+-- HAVING COUNT(DISTINCT(year)) = 139
+-- ORDER BY years_appearing DESC;
+
+--Answer: 921
 
 -- 16. How many names have only appeared in one year?
 
--- SELECT COUNT(DISTINCT(name))
--- From names
--- WHERE name IN (SELECT name
+-- SELECT name, COUNT(DISTINCT(year)) AS years_appearing
 -- FROM names
--- GROUP BY name, gender
--- HAVING COUNT(year) = 1);
+-- GROUP BY name
+-- HAVING COUNT(DISTINCT(year)) = 1
+-- ORDER BY years_appearing DESC;
 
---Answer: 23495
+--Answer: 21123
 
 -- 17. How many names only appeared in the 1950s?
 
